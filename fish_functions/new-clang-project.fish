@@ -37,6 +37,17 @@ function __ncp_template_main_c
         '}'
 end
 
+function __ncp_template_clang_format
+    printf '%s\n' \
+        'BasedOnStyle: LLVM' \
+        '' \
+        'IndentWidth: 4' \
+        'ColumnLimit: 100' \
+        '' \
+        'AlignConsecutiveDeclarations: true' \
+        'AlignConsecutiveAssignments: true'
+end
+
 function __ncp_template_cmakelists -a name lang
     set -l cmake_lang CXX
     set -l src_file src/main.cpp
@@ -99,6 +110,7 @@ function new-clang-project
 
     __ncp_template_cmakelists $cmake_name $lang > $project_dir/CMakeLists.txt
     __ncp_template_gitignore > $project_dir/.gitignore
+    __ncp_template_clang_format > $project_dir/.clang-format
 
     git -C $project_dir init -q 2>/dev/null
 
